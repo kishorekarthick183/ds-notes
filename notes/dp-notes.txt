@@ -1,0 +1,49 @@
+top to down aka memorization using recursion classic way of improving time complexity by using cache value. it generally ends up to the bottom when the base condition is got.
+bottom to up aka dp way, it infers the use of fixing lower base case and building up to the top. 
+
+lets look into classic dp problsms. 
+
+knapscack. given W, v[], wt[], maximize the sum(values). each value i has weight of w[i].
+solveing this involves pick and not pick senerio. where you calculate for each value i in n, that how much weight can weights of w(i..n) put ?
+let consider two layer l1,l2
+l2 layer is taking the previous value from l1. and constructing the l2 from l1 pre computation. at each value i in 0..n-1
+you can make O(W) twice making it O(W) instead of O(N,W). 
+another way to look at this is saving the previous value in the current value itself. here it comes to the storing in one array. 
+the idea is lets consider one layer l1 is consider finished. since the construction of l2 depends on l1's state from left you can use that previous state by considering the filling states from right to left. 
+which keep the old (previous) value from the left unchanged while the changes done in the l1 itself.
+so it is like l1..l1 slowly comming to l1..l2 then l2 itself then which will become l1. 
+
+
+longest common subsequence. lets look at the matrix that shows i for s1, j for s2. you can include or not include by this using i-1, j-1.
+this is a common way to handling include or exclude to find the common sequence to be maximum. 
+since all you have is a previous arr[] that doesn't include the char and previous value in the current arr[]. you can make it as l1,l2 layers
+so you need one variable to store previous, upper like upper = dp[i](which isn't updated). then you would need previous = dp[i - 1](which is updated). 
+majorly you would neeed upper. previous is easily found usiong dp[i-1]. so you can make it O(N) with a single arr.
+
+longest increasing subsequence
+i think this one is deals with binary search not dp ? 
+
+bit maask. this works by knowing the different subsets taken. mask can take down the visited nodes by its mark upto i. 
+so you only need to iterate this mask from i to j for each and calculate the minimum cost to go tour 
+
+binary lifting. up[current node][how many steps in powers of 2 (power)] = ancestor node. up[node][2^0=1 (0)] = p. 
+powers from 1 to LOG
+    do up[node][power] = up[up[node][power - 1]][power - 1] # note up[node][power - 1] is ancestor. while up[node][power] is ancestors ancestor
+
+while take big steps at a time and compute the lca. 
+
+Things to know>
+
+coins, target: consider to form target by the outer items while the inner amout (combinations) aka limited items. outer amout while inner items (permutation) unlimited items or coins. 
+we alos have pull and push dp. pull dp[x] = dp[x - c] (compute the current state from pervious state). while push dp[x + c] = dp[x] (update the future state).
+
+how does mod works in dp ? 
+a + b (mod m) = (a mod m + b mod m) mod m 
+a - b (mod m) = (a mod m - b mod m + (m)) mod m 
+same goes fr all . 
+
+
+digit dp ? 
+keep track of (idx, is_less, is_started)
+is less if false thenyou can't place it in idx. else place. 
+is_started is used for avoiding the initial leading zeros. 
